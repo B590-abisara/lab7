@@ -50,6 +50,10 @@ class TicketDetailFragment : Fragment() {
             ticketSolved.setOnCheckedChangeListener { _, isChecked ->
                 ticket = ticket.copy(isSolved = isChecked)
             }
+            ticketDate.apply {
+                text = ticket.date.toString()
+                isEnabled = false
+            }
 
         }
 
