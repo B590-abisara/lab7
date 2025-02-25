@@ -28,7 +28,8 @@ class TicketDetailFragment : Fragment() {
             id = UUID.randomUUID(),
             title = "",
             date = Date(),
-            isSolved = false
+            isSolved = false,
+            requiresManager = false
         )
     }
     override fun onCreateView(
