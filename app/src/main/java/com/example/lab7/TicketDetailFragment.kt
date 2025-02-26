@@ -25,9 +25,9 @@ class TicketDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         ticket = Ticket(
-            id = UUID.randomUUID(),
+            id = UUID.randomUUID().toString(),
             title = "",
-            date = Date(),
+            date = Date().time,
             isSolved = false
         )
     }

@@ -29,7 +29,7 @@ class TicketListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "Total tickets: ${ticketListViewModel.tickets.size}")
+        Log.d(TAG, "Total tickets: ${ticketListViewModel.tickets}")
     }
 
     override fun onCreateView(
@@ -49,9 +49,10 @@ class TicketListFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(
                 Lifecycle.State.STARTED
             ) {
-                val tickets = ticketListViewModel.tickets
-                val adapter = TicketListAdapter(tickets)
-                binding.ticketRecyclerView.adapter = adapter
+                ticketListViewModel.tickets.collect { tickets ->
+                    binding.ticketRecyclerView.adapter = TicketListAdapter(tickets)
+                }
+
             }
         }
     }
