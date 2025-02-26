@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lab7.databinding.FragmentTicketListBinding
+import kotlinx.coroutines.launch
 
 
 private const val TAG = "TicketListFragment"
@@ -27,6 +31,7 @@ class TicketListFragment : Fragment() {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "Total tickets: ${ticketListViewModel.tickets.size}")
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,14 +39,24 @@ class TicketListFragment : Fragment() {
     ): View? {
         _binding = FragmentTicketListBinding.inflate(inflater, container, false)
         binding.ticketRecyclerView.layoutManager = LinearLayoutManager(context)
-
-        val tickets = ticketListViewModel.tickets
-
-        val adapter = TicketListAdapter(tickets)
-        binding.ticketRecyclerView.adapter = adapter
-
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(
+                Lifecycle.State.STARTED
+            ) {
+                val tickets = ticketListViewModel.tickets
+                val adapter = TicketListAdapter(tickets)
+                binding.ticketRecyclerView.adapter = adapter
+            }
+        }
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
