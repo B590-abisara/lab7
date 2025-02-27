@@ -7,18 +7,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab7.databinding.ListItemTicketBinding
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 
 class TicketHolder(
     private val binding: ListItemTicketBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    private val dateFormat = SimpleDateFormat("EEEE, dd MMM yyyy, HH:mm", Locale.getDefault())
+
     fun bind(ticket: Ticket) {
         binding.ticketTitle.text = ticket.title
-
-        val formattedDate = DateFormat.format("MMM dd, yyyy", Date(ticket.date)).toString()
-        binding.ticketDate.text = formattedDate 
+        binding.ticketDate.text = dateFormat.format(Date(ticket.date)) .toString()
 
         binding.root.setOnClickListener {
             Toast.makeText(
