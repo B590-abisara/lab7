@@ -7,12 +7,13 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.lab7.database.TicketTypeConverter
 
-@TypeConverters(TicketTypeConverter::class)
+@TypeConverters(TicketTypeConverter::class) // Ensure TypeConverter is used
 @Entity
 data class Ticket(
     @PrimaryKey val id: UUID = java.util.UUID.randomUUID(),
     val title: String,
     val date: Long,
     val isSolved: Boolean,
-    val assignee: String = ""
+    val assignee: String = "",
+    val photoFileName: String? = null
 )
